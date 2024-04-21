@@ -1,0 +1,9 @@
+{
+  "events": {
+    "restart": "cls && echo Restarting..."
+  },
+  "exec": "node src/app.js",
+  "watch": [
+    "src/"
+  ]
+}
