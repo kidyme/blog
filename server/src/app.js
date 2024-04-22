@@ -9,5 +9,5 @@ app.use(cors());
 db();
 
 app.listen(config.port, () => {
-  log(`The server is already running on port ${config.port}`, "sys", "sys");
+  log(`The server is already running on port ${config.port}`, "app");
 });

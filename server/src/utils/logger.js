@@ -2,7 +2,7 @@ import config from "../confs/sysConf.js";
 import { formatDate } from "./time.js";
 import fs from "fs";
 
-export function log(val, type = "msg", level = "info") {
+export function log(val, level = "info", type = "msg") {
   const msg = `${just("|" + level + "|", 6, false)} ${formatDate(
     "hh:mm:ss",
   )} ${just(type, 6, true)}: ${val}`;
@@ -12,7 +12,7 @@ export function log(val, type = "msg", level = "info") {
 }
 
 // data: [ [type: val], [type: val], [type: val] ]
-export function mutiLog(data, level = "info") {
+export function multiLog(data, level = "info") {
   const pre = `${just("|" + level + "|", 6, false)} ${formatDate("hh:mm:ss")}`;
   const file = "./logs/" + formatDate("YYYY-MM-DD") + ".txt";
   process.stdout.write(pre);
