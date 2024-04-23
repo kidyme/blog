@@ -16,7 +16,6 @@ export default model(
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      unique: true,
     },
   }),
 );
