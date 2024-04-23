@@ -1,14 +1,14 @@
 import { add, find, update, remove } from "../controllers/category.js";
 import { Router } from "express";
-import { baseCRUD } from "../utils/base.js";
+import { baseHttp } from "../utils/base.js";
 
 export default (app) => {
-  const router = baseCRUD(Router(), "/category/:id", {
+  const router = baseHttp(Router(), {
     add,
     find,
     update,
     remove,
   });
 
-  app.use("/", router);
+  app.use("/category", router);
 };
