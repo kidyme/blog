@@ -4,6 +4,7 @@ import cors from "cors";
 import { log } from "./utils/logger.js";
 import db from "./plugins/db.js";
 import setCategoryRoutes from "./routes/category.js";
+import setVisitorRoutes from "./routes/visitor.js";
 import setPostRoutes from "./routes/post.js";
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 db();
 
 setCategoryRoutes(app);
+setVisitorRoutes(app);
 setPostRoutes(app);
 
 app.listen(config.port, () => {
