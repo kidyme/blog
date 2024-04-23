@@ -8,15 +8,13 @@ export default model(
     content: {
       type: String,
     },
-    post: {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
-      unique: true,
-    },
     visitor: {
       type: Schema.Types.ObjectId,
       ref: "Visitor",
-      unique: true,
+    },
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
     },
   }),
 );
