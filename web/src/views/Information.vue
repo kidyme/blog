@@ -1,6 +1,4 @@
-<template>
-  <h1>{{ msg }}</h1>
-</template>
+<template></template>
 
 <script setup>
 import { ref } from 'vue';

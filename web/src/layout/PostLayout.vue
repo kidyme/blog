@@ -1,22 +1,20 @@
 <template>
   <v-app>
-    <v-main class="bg-grey-lighten-3">
-      <v-container fluid style="width: 95%">
+    <v-main class="bg-grey-lighten-3 full-background">
+      <v-container fluid style="width: 65%">
         <v-row style="display: flex">
-          <v-col style="flex: 2.5">
-            <v-sheet min-height="40vh" max-height="80vh" rounded="lg" class="scrollbar">
-              <Information />
-            </v-sheet>
+          <v-col style="flex: 12; margin-right: 2vw">
+            <RouterView />
           </v-col>
-          <v-col style="flex: 7">
-            <v-sheet min-height="90vh" rounded="lg">
-              <RouterView />
-            </v-sheet>
-          </v-col>
-          <v-col style="flex: 2.5">
-            <v-sheet min-height="40vh" max-height="80vh" rounded="lg" class="scrollbar">
-              <Category />
-            </v-sheet>
+          <v-col style="flex: 5" class="pt-8">
+            <div class="side-card">
+              <v-sheet min-height="40vh" max-height="80vh" :elevation="1" class="scrollbar mb-8">
+                <Information />
+              </v-sheet>
+              <v-sheet min-height="40vh" max-height="80vh" :elevation="1" class="scrollbar">
+                <Category />
+              </v-sheet>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -30,6 +28,19 @@ import Information from '@/views/Information.vue';
 </script>
 
 <style>
+.full-background {
+  background-image: url('@/assets/bg.jpg');
+  background-position: center;
+  background-repeat: repeat;
+  min-height: 100vh;
+}
+
+.side-card {
+  position: fixed;
+  top: 10%;
+  width: 18%;
+}
+
 .scrollbar {
   overflow: hidden;
 }
