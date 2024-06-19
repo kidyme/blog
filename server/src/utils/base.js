@@ -1,6 +1,5 @@
 import errCode from "../confs/errConf.js";
 import { log, multiLog } from "../utils/logger.js";
-// import { buildRes } from "../utils/base.js";
 
 const baseSchema = {
   createTime: {
@@ -17,10 +16,20 @@ const buildRes = (msg, data = null, code = 200) => {
   return { msg, data, code };
 };
 
-const baseHttp = (router, https) => {
+const baseHttp = (router, operators) => {
   router.get("/:id", (req, res) => {
-    https
+    operators
       .find(req.params)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  });
+  router.get("/", (req, res) => {
+    operators
+      .findAll()
       .then((result) => {
         res.send(result);
       })
@@ -35,7 +44,7 @@ const baseHttp = (router, https) => {
       next();
     })
     .put((req, res) => {
-      https
+      operators
         .update(req.body)
         .then((result) => {
           res.send(result);
@@ -45,7 +54,7 @@ const baseHttp = (router, https) => {
         });
     })
     .post((req, res) => {
-      https
+      operators
         .add(req.body)
         .then((result) => {
           res.send(result);
@@ -55,7 +64,7 @@ const baseHttp = (router, https) => {
         });
     })
     .delete((req, res) => {
-      https
+      operators
         .remove(req.body)
         .then((result) => {
           res.send(result);
@@ -70,10 +79,10 @@ const baseHttp = (router, https) => {
 
 const baseCRUD = (Model, modelName) => {
   async function add(data) {
-    const category = new Model(data);
+    const model = new Model(data);
 
     try {
-      const doc = await category.save();
+      const doc = await model.save();
       multiLog([...[["msg", `${modelName}被添加`]], ...Object.entries(data)]);
       return buildRes("成功", { ...doc.toObject() });
     } catch (err) {
@@ -102,6 +111,20 @@ const baseCRUD = (Model, modelName) => {
     } catch (err) {
       log(`在查找${modelName}时发生错误: ${err}`, "db", "err");
       throw buildRes("err", err.message, 201);
+    }
+  }
+
+  async function findAll() {
+    try {
+      const docs = await Model.find({});
+      multiLog([
+        ...[["msg", `所有${modelName}找到`]],
+        ...docs.map((doc) => Object.entries(doc.toObject())),
+      ]);
+      return buildRes("suc", docs);
+    } catch (err) {
+      log(`在查找所有${modelName}时发生错误: ${err}`, "db", "err");
+      return buildRes("错误", err.message, 201);
     }
   }
 
@@ -152,7 +175,7 @@ const baseCRUD = (Model, modelName) => {
     }
   }
 
-  return { add, find, update, remove };
+  return { add, find, findAll, update, remove };
 };
 
 export { baseSchema, buildRes, baseHttp, baseCRUD };

@@ -1,7 +1,40 @@
 import fs from "fs";
 import { marked } from "marked";
-import { log } from "../utils/logger";
+import { log } from "../utils/logger.js";
 const renderer = new marked.Renderer();
+
+const tags = [
+  { tag: "heading", abbreviation: "h", special: true },
+  { tag: "paragraph", abbreviation: "p" },
+  { tag: "em", abbreviation: "em" },
+  { tag: "strong", abbreviation: "str" },
+  { tag: "link", abbreviation: "lnk" },
+  { tag: "image", abbreviation: "img" },
+  { tag: "code", abbreviation: "cd", special: true },
+  { tag: "blockquote", abbreviation: "bq" },
+  { tag: "list", abbreviation: "lst" },
+  { tag: "listitem", abbreviation: "li" },
+  { tag: "table", abbreviation: "tbl" },
+  { tag: "tablerow", abbreviation: "tr" },
+  { tag: "tablecell", abbreviation: "tc" },
+  { tag: "hr", abbreviation: "hr" },
+  { tag: "html", abbreviation: "html" },
+];
+
+tags.forEach((tag) => {
+  if (tag.special) return;
+  renderer[tag.tag] = function (...args) {
+    const defaultRender = marked.Renderer.prototype[tag.tag].bind(this);
+    let output = defaultRender(...args);
+    output = output.replace(/<([^ >]+)/, `<$1 class="md-${tag.abbreviation}"`);
+    return output;
+  };
+});
+
+renderer.heading = (text, level) => {
+  const tag = `h${level}`;
+  return `<${tag} class="md-${tag}">${text}</${tag}>`;
+};
 
 renderer.code = function (code, language) {
   const escapeHTML = (str) => {
@@ -17,16 +50,16 @@ renderer.code = function (code, language) {
     };
     return String(str).replace(/[&<>"'`=\/]/g, (s) => entityMap[s]);
   };
-
   return `<div class="code-container">
-            <div><span class='copy-btn' onclick="copyToClipboard(this)">复制</span></div>
-            <pre><code class="${language}">${escapeHTML(code)}</code></pre>
+            <div><span class='md-copy-btn' onclick="copyToClipboard(this)">复制</span></div>
+            <pre><code class="md-code${
+              language ? ` md-code-${language}` : ""
+            }">${escapeHTML(code)}</code></pre>
           </div>`;
 };
 
-const htmlFea = {
-  func: {
-    copy: `
+const funcs = {
+  copy: `
     <script>
     function copyToClipboard(button) {
       const code = button.parentNode.querySelector('pre code').textContent;
@@ -36,7 +69,6 @@ const htmlFea = {
     }
     </script>
     `,
-  },
 };
 
 marked.setOptions({ renderer });
@@ -45,7 +77,7 @@ export function md2html(mdPath, htmlPath) {
   try {
     const data = fs.readFileSync(mdPath, "utf8");
     let html = marked(data);
-    html += htmlFea.func.copy;
+    html += funcs.copy;
     fs.writeFileSync(htmlPath, html);
     log("trans successfully", "md2html");
     return true;

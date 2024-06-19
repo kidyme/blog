@@ -1,3 +1,9 @@
+// import { md2html } from "./plugins/md2html.js";
+// md2html(
+//   "X:/code/blog/web/src/assets/docker.md",
+//   "C:/Users/kidyme/Desktop/docker.html",
+// );
+//
 import config from "./confs/sysConf.js";
 import express from "express";
 import cors from "cors";
