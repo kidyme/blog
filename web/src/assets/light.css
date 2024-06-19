@@ -1,0 +1,384 @@
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'), url('./github/open-sans-v17-latin-ext_latin-regular.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* open-sans-italic - latin-ext_latin */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: normal;
+    src: local('Open Sans Italic'), local('OpenSans-Italic'), url('./github/open-sans-v17-latin-ext_latin-italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* open-sans-700 - latin-ext_latin */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('./github/open-sans-v17-latin-ext_latin-700.woff2') format('woff2'); 
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* open-sans-700italic - latin-ext_latin */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('./github/open-sans-v17-latin-ext_latin-700italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+.md-html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.md-body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+.md-write {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+    .md-write {
+        max-width: 1024px;
+    }
+}
+
+@media only screen and (min-width: 1800px) {
+    .md-write {
+        max-width: 1200px;
+    }
+}
+
+.md-write > ul:first-child,
+.md-write > ol:first-child{
+    margin-top: 30px;
+}
+
+.md-lnk {
+    color: #4183C4;
+}
+
+.md-h1,
+.md-h2,
+.md-h3,
+.md-h4,
+.md-h5,
+.md-h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+.md-h1:hover .md-anchor,
+.md-h2:hover .md-anchor,
+.md-h3:hover .md-anchor,
+.md-h4:hover .md-anchor,
+.md-h5:hover .md-anchor,
+.md-h6:hover .md-anchor {
+    text-decoration: none;
+}
+.md-h1 tt,
+.md-h1 code {
+    font-size: inherit;
+}
+.md-h2 tt,
+.md-h2 code {
+    font-size: inherit;
+}
+.md-h3 tt,
+.md-h3 code {
+    font-size: inherit;
+}
+.md-h4 tt,
+.md-h4 code {
+    font-size: inherit;
+}
+.md-h5 tt,
+.md-h5 code {
+    font-size: inherit;
+}
+.md-h6 tt,
+.md-h6 code {
+    font-size: inherit;
+}
+.md-h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+.md-h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+.md-h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+.md-h4 {
+    font-size: 1.25em;
+}
+.md-h5 {
+    font-size: 1em;
+}
+.md-h6 {
+    font-size: 1em;
+    color: #777;
+}
+.md-p,
+.md-bq,
+.md-ul,
+.md-ol,
+.md-dl,
+.md-tbl{
+    margin: 0.8em 0;
+}
+.md-li>ol,
+.md-li>ul {
+    margin: 0 0;
+}
+.md-hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.md-li p.first {
+    display: inline-block;
+}
+.md-ul,
+.md-ol {
+    padding-left: 30px;
+}
+.md-ul:first-child,
+.md-ol:first-child {
+    margin-top: 0;
+}
+.md-ul:last-child,
+.md-ol:last-child {
+    margin-bottom: 0;
+}
+.md-bq {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+.md-bq .md-bq {
+    padding-right: 0;
+}
+.md-tbl {
+    padding: 0;
+    word-break: initial;
+}
+.md-tbl tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+.md-tbl tr:nth-child(2n),
+.md-thead {
+    background-color: #f8f8f8;
+}
+.md-tbl th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+.md-tbl td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+.md-tbl th:first-child,
+.md-tbl td:first-child {
+    margin-top: 0;
+}
+.md-tbl th:last-child,
+.md-tbl td:last-child {
+    margin-bottom: 0;
+}
+
+.md-CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.md-code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-md-fences,
+.md-code,
+.md-tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+.md-code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+.md-md-task-list-item > input {
+    margin-left: -1.3em;
+}
+
+.md-md-fences {
+    background-color: #f8f8f8;
+}
+.md-write .md-pre.md-meta-block {
+    padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.md-mathjax-block>.md-code-tooltip {
+    bottom: .375rem;
+}
+
+.md-md-mathjax-midline {
+    background: #fafafa;
+}
+
+.md-write>md-h3.md-md-focus:before{
+    left: -1.5625rem;
+    top: .375rem;
+}
+.md-write>md-h4.md-md-focus:before{
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+.md-write>md-h5.md-md-focus:before{
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+.md-write>md-h6.md-md-focus:before{
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+.md-md-image>.md-md-meta {
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.md-sidebar-tabs {
+    border-bottom: none;
+}
+
+.md-typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+.md-typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.md-on-focus-mode .md-bq {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+.md-header, .md-context-menu, .md-megamenu-content, .md-footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.md-file-node-content:hover .md-file-node-icon,
+.md-file-node-content:hover .md-file-node-open-state{
+    visibility: visible;
+}
+
+.md-mac-seamless-mode .md-typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-mac-os .md-write{
+    caret-color: AccentColor;
+}
+
+.md-md-lang {
+    color: #b4654d;
+}
+
+.md-md-notification .md-btn {
+    border: 0;
+}
+
+.md-dropdown-menu .md-divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.md-ty-preferences .md-window-content {
+    background-color: #fafafa;
+}
+
+.md-ty-preferences .md-nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.md-menu-item-container a.md-menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
