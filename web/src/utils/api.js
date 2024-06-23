@@ -2,18 +2,19 @@ import http from '@/utils/request.js';
 
 export default (url) => {
   return {
-    get: async (params) =>
-      http({
+    get: function (params) {
+      return http({
         url,
         method: 'get',
         params,
-      }),
-    getAll: async (data) =>
-      http({
+      });
+    },
+    getAll: function (data) {
+      return http({
         url,
-        method: 'post',
-        data,
-      }),
+        method: 'get',
+      });
+    },
     add: async (data) =>
       http({
         url,
@@ -23,13 +24,13 @@ export default (url) => {
     update: async (data) =>
       http({
         url,
-        method: 'post',
+        method: 'put',
         data,
       }),
     remove: async (data) =>
       http({
         url,
-        method: 'post',
+        method: 'delete',
         data,
       }),
   };

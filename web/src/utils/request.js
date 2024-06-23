@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const http = axios.create({
-  baseURL: 'localhost:3000',
+  baseURL: 'http://localhost:3000',
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });
 
-axiosInstance.interceptors.request.use(
+http.interceptors.request.use(
   (config) => {
     return config;
   },
@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+http.interceptors.response.use(
   (response) => {
     return response.data;
   },
