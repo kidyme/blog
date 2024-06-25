@@ -19,7 +19,7 @@ async function find(data) {
         return buildRes("suc", post);
       } catch (readErr) {
         log(`读取${path}内容时发生错误: ${readErr}`, "fs", "err");
-        return buildRes("err", readErr.message, 201);
+        return buildRes("suc", doc);
       }
     } else {
       log(`Post未找到`, "db");
