@@ -11,15 +11,5 @@ export default (app) => {
     remove,
   });
 
-  // router.post("/getContent", (req, res) => {
-  //   find(req.body)
-  //     .then((result) => {
-  //       res.send(result);
-  //     })
-  //     .catch((err) => {
-  //       res.send(err);
-  //     });
-  // });
-
   app.use("/post", router);
 };

@@ -14,8 +14,9 @@ async function find(data) {
 
       try {
         const content = await fs.readFile(path, "utf8");
-        doc.content = content;
-        return buildRes("suc", doc);
+        let post = JSON.parse(JSON.stringify(doc));
+        post.content = content;
+        return buildRes("suc", post);
       } catch (readErr) {
         log(`读取${path}内容时发生错误: ${readErr}`, "fs", "err");
         return buildRes("err", readErr.message, 201);
@@ -30,26 +31,37 @@ async function find(data) {
   }
 }
 
-// async function find(data) {
-//   const { id } = data;
-//
-//   try {
-//     const doc = await Model.findById(id);
-//
-//     if (doc) {
-//       multiLog([
-//         ...[["msg", `${modelName}找到`]],
-//         ...Object.entries(doc.toObject()),
-//       ]);
-//       return buildRes("suc", doc);
-//     } else {
-//       log(`${modelName}未找到`, "db");
-//       return buildRes("fail");
-//     }
-//   } catch (err) {
-//     log(`在查找${modelName}时发生错误: ${err}`, "db", "err");
-//     throw buildRes("err", err.message, 201);
-//   }
-// }
+async function findAll() {
+  try {
+    const docs = await Post.find({});
 
-export { find };
+    multiLog([
+      ...[["msg", `所有Post找到`]],
+      ...docs.map((doc) => Object.entries(doc.toObject())),
+    ]);
+
+    const posts = await Promise.all(
+      docs.map(async (doc) => {
+        const path = doc.path;
+        try {
+          const content = await fs.readFile(path, "utf8");
+          let post = JSON.parse(JSON.stringify(doc));
+          post.content = content;
+          return post;
+        } catch (readErr) {
+          log(`读取${path}内容时发生错误: ${readErr}`, "fs", "err");
+          let post = JSON.parse(JSON.stringify(doc));
+          post.content = null;
+          return post;
+        }
+      }),
+    );
+
+    return buildRes("suc", posts);
+  } catch (err) {
+    log(`在查找所有${modelName}时发生错误: ${err}`, "db", "err");
+    return buildRes("错误", err.message, 201);
+  }
+}
+
+export { find, findAll };

@@ -18,25 +18,25 @@ const buildRes = (msg, data = null, code = 200) => {
 
 const baseHttp = (router, operators) => {
   router.get("/", (req, res) => {
-    operators
-      .findAll()
-      .then((result) => {
-        res.send(result);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
-  });
-
-  router.get("/:id", (req, res) => {
-    operators
-      .find({ id: req.params.id })
-      .then((result) => {
-        res.send(result);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
+    if (req.query.id) {
+      operators
+        .find({ id: req.query.id })
+        .then((result) => {
+          res.send(result);
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    } else {
+      operators
+        .findAll()
+        .then((result) => {
+          res.send(result);
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    }
   });
 
   router
