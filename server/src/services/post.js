@@ -3,13 +3,10 @@ import { buildRes } from "../utils/base.js";
 import fs from "fs/promises";
 import Post from "../models/post.js";
 
-async function getPost(data) {
+async function find(data) {
   const { id } = data;
-  log(id);
-
   try {
     const doc = await Post.findById(id);
-    log(doc);
 
     if (doc) {
       multiLog([...[["msg", `Post找到`]], ...Object.entries(doc.toObject())]);
@@ -17,7 +14,8 @@ async function getPost(data) {
 
       try {
         const content = await fs.readFile(path, "utf8");
-        return buildRes("suc", { content });
+        doc.content = content;
+        return buildRes("suc", doc);
       } catch (readErr) {
         log(`读取${path}内容时发生错误: ${readErr}`, "fs", "err");
         return buildRes("err", readErr.message, 201);
@@ -31,4 +29,27 @@ async function getPost(data) {
     throw buildRes("err", err.message, 201);
   }
 }
-export { getPost };
+
+// async function find(data) {
+//   const { id } = data;
+//
+//   try {
+//     const doc = await Model.findById(id);
+//
+//     if (doc) {
+//       multiLog([
+//         ...[["msg", `${modelName}找到`]],
+//         ...Object.entries(doc.toObject()),
+//       ]);
+//       return buildRes("suc", doc);
+//     } else {
+//       log(`${modelName}未找到`, "db");
+//       return buildRes("fail");
+//     }
+//   } catch (err) {
+//     log(`在查找${modelName}时发生错误: ${err}`, "db", "err");
+//     throw buildRes("err", err.message, 201);
+//   }
+// }
+
+export { find };
