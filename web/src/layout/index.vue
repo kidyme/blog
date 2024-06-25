@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire" class="full-background">
-    <v-app-bar class="px-3" density="compact" flat>
+    <v-app-bar class="px-3" style="border-bottom: 1px solid #e0e0e0" density="compact" flat>
       <v-spacer></v-spacer>
 
       <v-tabs v-model="choice" color="grey-darken-2" centered>
@@ -19,7 +19,7 @@ import { ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const links = [
-  ['首页', '/'],
+  ['浏览', '/'],
   ['关于', '/about'],
 ];
 

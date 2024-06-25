@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main class="bg-grey-lighten-3 full-background">
-      <v-container fluid style="width: 65%">
+      <v-container fluid style="width: 80%">
         <v-row style="display: flex">
           <v-col style="flex: 12; margin-right: 2vw">
             <RouterView />

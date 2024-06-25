@@ -1,26 +1,44 @@
 <template>
-  <v-sheet :elevation="1" border class="mb-6 px-12 pt-3" v-for="(post, idx) in posts">
+  <v-sheet :elevation="1" border class="mb-6 px-12 pt-3" v-for="post in posts">
     <div>
-      <span style="font-size: 22px; font-weight: 500">{{ post.title }}</span>
+      <span @click="jump(post._id)" class="underline" style="font-size: 25px; font-weight: 500; cursor: pointer">{{ post.title }}</span>
     </div>
     <v-divider color="#000" class="my-3"></v-divider>
-    <div><MdPreview :source="post.briefContent" /></div>
-    <div>
-      <span style="font-size: 12px; font-weight: 400">{{ formatTime(post.time, 'YYYY年M月DD日') }}</span>
+    <div style="max-height: 30vh; overflow: hidden" v-html="post.content"></div>
+    <div class="mt-5">
+      <span style="font-size: 12px; font-weight: 400">{{ formatTime(post.updateTime, 'YYYY年M月DD日') }}</span>
     </div>
   </v-sheet>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { formatTime } from '@/utils/time.js';
-import MdPreview from '@/components/md_preview.vue';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import postModel from '@/model/post.js';
 
-const posts = [
-  { title: '在 Laravel 中使用 Vite 来构建静态资源', time: 1717656986289, briefContent: '# hello' },
-  { title: '在 Laravel 中使用 Vite 来构建静态资源', time: 1717657586289, briefContent: '# 111' },
-  { title: '在 Laravel 中使用 Vite 来构建静态资源', time: 1717660586289, briefContent: '# 123' },
-];
+const router = useRouter();
+const posts = computed(() => postModel.fetch());
+
+onMounted(() => {
+  postModel.actions.getAll();
+});
+
+const jump = (id) => {
+  router.push({
+    path: `/post/${id}`,
+  });
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.underline {
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom-color 0.1s;
+}
+
+.underline:hover {
+  border-bottom-color: #000;
+}
+</style>

@@ -1,3 +1,3 @@
 import baseApi from '@/utils/api.js';
 
-export const { add, get, getAll, update, remove } = baseApi('message');
+export const { get, getAll } = baseApi('message');
