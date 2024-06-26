@@ -9,7 +9,7 @@ export default (url) => {
         params,
       });
     },
-    getAll: function (data) {
+    getAll: function () {
       return http({
         url,
         method: 'get',
