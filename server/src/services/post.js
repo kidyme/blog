@@ -31,9 +31,11 @@ async function find(data) {
   }
 }
 
-async function findAll() {
+async function findAll(params) {
   try {
-    const docs = await Post.find({});
+    const filter =
+      params && params.category ? { category: params.category } : {};
+    const docs = await Post.find(filter).populate("category");
 
     multiLog([
       ...[["msg", `所有Post找到`]],

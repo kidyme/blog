@@ -29,7 +29,7 @@ const baseHttp = (router, operators) => {
         });
     } else {
       operators
-        .findAll()
+        .findAll(req.query)
         .then((result) => {
           res.send(result);
         })
@@ -94,7 +94,6 @@ const baseCRUD = (Model, modelName) => {
 
   async function find(data) {
     const { id } = data;
-    log(id);
 
     try {
       const doc = await Model.findById(id);
@@ -115,9 +114,9 @@ const baseCRUD = (Model, modelName) => {
     }
   }
 
-  async function findAll() {
+  async function findAll(params = {}) {
     try {
-      const docs = await Model.find({});
+      const docs = await Model.find(params);
       multiLog([
         ...[["msg", `所有${modelName}找到`]],
         ...docs.map((doc) => Object.entries(doc.toObject())),
