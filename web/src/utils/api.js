@@ -9,10 +9,11 @@ export default (url) => {
         params,
       });
     },
-    getAll: function () {
+    getAll: function (params = {}) {
       return http({
         url,
         method: 'get',
+        params,
       });
     },
     add: async (data) =>

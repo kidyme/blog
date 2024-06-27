@@ -1,4 +1,4 @@
-import { get, getAll, add } from '@/api/visitor.js';
-import model from '@/utils/model.js';
+import * as actions from '@/api/visitor.js';
+import buildModel from '@/utils/model.js';
 
-export default model('visitor', { get, getAll, add });
+export default buildModel('visitor', actions);

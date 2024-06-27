@@ -16,9 +16,9 @@ export default (modelName, operator) => {
 
   const actions = {
     getAll: operator.getAll
-      ? async () => {
+      ? async (params = {}) => {
           await operator
-            .getAll()
+            .getAll(params)
             .then((res) => {
               state.data = res.data;
             })
@@ -46,7 +46,7 @@ export default (modelName, operator) => {
           await operator
             .add(data)
             .then((res) => {
-              if (operator.getAll) actions.getAll(); // Refresh list if getAll is available
+              if (operator.getAll) actions.getAll();
             })
             .catch((err) => {
               console.error(`Error adding ${modelName}:`, err);
@@ -59,7 +59,7 @@ export default (modelName, operator) => {
           await operator
             .update(data)
             .then(() => {
-              if (operator.getAll) return actions.getAll(); // Refresh list if getAll is available
+              if (operator.getAll) actions.getAll();
             })
             .catch((err) => {
               console.error(`Error updating ${modelName}:`, err);
@@ -72,7 +72,7 @@ export default (modelName, operator) => {
           await operator
             .remove(data)
             .then(() => {
-              if (operator.getAll) return actions.getAll(); // Refresh list if getAll is available
+              if (operator.getAll) actions.getAll();
             })
             .catch((err) => {
               console.error(`Error removing ${modelName}:`, err);

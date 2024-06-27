@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main class="bg-grey-lighten-3 full-background">
-      <v-container fluid style="width: 80%">
+      <v-container fluid style="width: 85%">
         <v-row style="display: flex">
           <v-col style="flex: 12; margin-right: 2vw">
             <RouterView />
@@ -12,7 +12,7 @@
                 <Information />
               </v-sheet>
               <v-sheet min-height="40vh" max-height="80vh" :elevation="1" class="scrollbar">
-                <Category />
+                <Category :current="category ? category : ''" />
               </v-sheet>
             </div>
           </v-col>
@@ -23,8 +23,20 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import Category from '@/views/Category.vue';
 import Information from '@/views/Information.vue';
+
+const route = useRoute();
+const category = ref(route.query.category || '');
+
+watch(
+  () => route.query.category,
+  (newCategory) => {
+    category.value = newCategory || '';
+  }
+);
 </script>
 
 <style>

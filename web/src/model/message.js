@@ -1,4 +1,15 @@
-import { get, getAll, add } from '@/api/message.js';
-import model from '@/utils/model.js';
+import * as actions from '@/api/message.js';
+import buildModel from '@/utils/model.js';
 
-export default model('message', { get, getAll, add });
+const model = buildModel('message', actions);
+model.actions.like = async (id) => {
+  await actions
+    .like(id)
+    .then(() => {
+      model.actions.getAll();
+    })
+    .catch((err) => {
+      console.error(`Error liking Message:`, err);
+    });
+};
+export default model;
