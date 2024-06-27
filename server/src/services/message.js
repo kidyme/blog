@@ -21,7 +21,6 @@ async function find(data) {
           },
         },
       ]);
-      console.log(replies);
       const result = JSON.parse(JSON.stringify(doc));
       result.replies = replies;
 

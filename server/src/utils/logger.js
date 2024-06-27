@@ -5,7 +5,7 @@ import fs from "fs";
 export function log(val, level = "info", type = "msg") {
   const msg = `${just("|" + level + "|", 6, false)} ${formatDate(
     "hh:mm:ss",
-  )} ${just(type, 6, true)}: ${val}`;
+  )} ${just(type, 10, true)}: ${val}`;
   const file = "./logs/" + formatDate("YYYY-MM-DD") + ".txt";
   console.log(msg);
   fWrite(file, msg);
@@ -20,7 +20,7 @@ export function multiLog(data, level = "info") {
   data.forEach((item, idx) => {
     const msg =
       (idx ? just("", pre.length, false) : "") +
-      ` ${just(item[0] ? item[0] : "msg", 6, true)}: ${item[1]}`;
+      ` ${just(item[0] ? item[0] : "msg", 10, true)}: ${item[1]}`;
 
     console.log(msg);
     fWrite(file, msg);

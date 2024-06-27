@@ -69,7 +69,6 @@ async function like(id) {
   try {
     const doc = await Post.findById(id);
     if (doc) {
-      console.log(doc);
       doc.like += 1;
       await doc.save();
       log(`点赞Post ID ${id}`, "db");
