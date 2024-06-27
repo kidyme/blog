@@ -9,6 +9,10 @@ export default model(
       type: String,
       unique: true,
     },
+    like: {
+      type: Number,
+      default: 0,
+    },
     path: {
       type: String,
       unique: true,

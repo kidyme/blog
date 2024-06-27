@@ -8,6 +8,14 @@ export default model(
     content: {
       type: String,
     },
+    like: {
+      type: Number,
+      default: 0,
+    },
+    reply: {
+      type: Schema.Types.ObjectId,
+      ref: "Message",
+    },
     visitor: {
       type: Schema.Types.ObjectId,
       ref: "Visitor",

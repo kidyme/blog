@@ -63,5 +63,23 @@ async function findAll() {
     return buildRes("错误", err.message, 201);
   }
 }
+async function like(id) {
+  try {
+    const doc = await Post.findById(id);
+    if (doc) {
+      console.log(doc);
+      doc.like += 1;
+      await doc.save();
+      log(`点赞Post ID ${id}`, "db");
+      return buildRes("suc");
+    } else {
+      log(`Post未找到`, "db");
+      return buildRes("fail");
+    }
+  } catch (err) {
+    log(`点赞Post时发生错误: ${err}`, "db", "err");
+    return buildRes("错误", err.message, 201);
+  }
+}
 
-export { find, findAll };
+export { find, findAll, like };
