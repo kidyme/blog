@@ -34,6 +34,13 @@ export default (modelName, operator) => {
             .get({ id })
             .then((res) => {
               state.one = res.data;
+
+              if (state.data.length > 0) {
+                const index = state.data.findIndex((item) => item._id === id);
+                if (index !== -1) {
+                  state.data[index] = res.data;
+                }
+              }
             })
             .catch((err) => {
               console.error(`Error fetching ${modelName}:`, err);

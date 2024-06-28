@@ -6,7 +6,7 @@ model.actions.like = async (id) => {
   await actions
     .like(id)
     .then(() => {
-      model.actions.getAll();
+      model.actions.get(id);
     })
     .catch((err) => {
       console.error(`Error liking Message:`, err);
