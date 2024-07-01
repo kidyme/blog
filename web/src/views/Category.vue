@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, defineProps } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import category from '@/model/category.js';
 

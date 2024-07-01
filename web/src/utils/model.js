@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 
-export default (modelName, operator) => {
+export default (modelName, operators) => {
   const state = reactive({
     data: [],
     one: undefined,
@@ -15,9 +15,9 @@ export default (modelName, operator) => {
   };
 
   const actions = {
-    getAll: operator.getAll
+    getAll: operators.getAll
       ? async (params = {}) => {
-          await operator
+          await operators
             .getAll(params)
             .then((res) => {
               state.data = res.data;
@@ -28,15 +28,15 @@ export default (modelName, operator) => {
         }
       : undefined,
 
-    get: operator.get
-      ? async (id) => {
-          await operator
-            .get({ id })
+    get: operators.get
+      ? async (params) => {
+          await operators
+            .get(params)
             .then((res) => {
               state.one = res.data;
 
               if (state.data.length > 0) {
-                const index = state.data.findIndex((item) => item._id === id);
+                const index = state.data.findIndex((item) => item._id === state.one._id);
                 if (index !== -1) {
                   state.data[index] = res.data;
                 }
@@ -48,12 +48,12 @@ export default (modelName, operator) => {
         }
       : undefined,
 
-    add: operator.add
+    add: operators.add
       ? async (data) => {
-          await operator
+          await operators
             .add(data)
             .then((res) => {
-              if (operator.getAll) actions.getAll();
+              if (operators.getAll) actions.getAll();
             })
             .catch((err) => {
               console.error(`Error adding ${modelName}:`, err);
@@ -61,12 +61,12 @@ export default (modelName, operator) => {
         }
       : undefined,
 
-    update: operator.update
+    update: operators.update
       ? async (data) => {
-          await operator
+          await operators
             .update(data)
             .then(() => {
-              if (operator.getAll) actions.getAll();
+              if (operators.getAll) actions.getAll();
             })
             .catch((err) => {
               console.error(`Error updating ${modelName}:`, err);
@@ -74,12 +74,12 @@ export default (modelName, operator) => {
         }
       : undefined,
 
-    remove: operator.remove
+    remove: operators.remove
       ? async (data) => {
-          await operator
+          await operators
             .remove(data)
             .then(() => {
-              if (operator.getAll) actions.getAll();
+              if (operators.getAll) actions.getAll();
             })
             .catch((err) => {
               console.error(`Error removing ${modelName}:`, err);

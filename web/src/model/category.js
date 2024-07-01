@@ -1,4 +1,4 @@
-import * as actions from '@/api/category.js';
+import * as operators from '@/api/category.js';
 import buildModel from '@/utils/model.js';
 
-export default buildModel('category', actions);
+export default buildModel('category', operators);

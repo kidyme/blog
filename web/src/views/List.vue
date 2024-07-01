@@ -8,7 +8,7 @@
       <v-divider color="#000" class="my-3"></v-divider>
       <div style="max-height: 30vh; overflow: hidden" v-html="post.content"></div>
       <div class="mt-5">
-        <span style="font-size: 12px; font-weight: 400">{{ formatTime(post.updateTime, 'YYYY年M月DD日') }}</span>
+        <span style="font-size: 12px; font-weight: 400">{{ formatTime(post.updateTime, 'yyyy年MM月dd日') }}</span>
       </div>
     </v-sheet>
   </div>
