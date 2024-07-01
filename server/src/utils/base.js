@@ -18,25 +18,35 @@ const buildRes = (msg, data = null, code = 200) => {
 
 const baseHttp = (router, operators) => {
   router.get("/", (req, res) => {
-    if (req.query.id) {
-      operators
-        .find({ id: req.query.id })
-        .then((result) => {
-          res.send(result);
-        })
-        .catch((err) => {
-          res.send(err);
-        });
-    } else {
-      operators
-        .findAll(req.query)
-        .then((result) => {
-          res.send(result);
-        })
-        .catch((err) => {
-          res.send(err);
-        });
-    }
+    // if (req.query.id) {
+    //   operators
+    //     .find({ id: req.query.id })
+    //     .then((result) => {
+    //       res.send(result);
+    //     })
+    //     .catch((err) => {
+    //       res.send(err);
+    //     });
+    // } else {
+    operators
+      .findAll(req.query)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+    // }
+  });
+  router.get("/one", (req, res) => {
+    operators
+      .find(req.query)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
   });
 
   router

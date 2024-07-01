@@ -1,30 +1,76 @@
 import { log, multiLog } from "../utils/logger.js";
 import { buildRes } from "../utils/base.js";
 import Message from "../models/message.js";
+import Visitor from "../models/visitor.js";
 import { add as addVisitor } from "../controllers/visitor.js";
+
+async function findVisitorByIp(ip) {
+  try {
+    const visitor = await Visitor.findOne({ ip });
+    return visitor;
+  } catch (err) {
+    log(`查找 Visitor 时出错: ${errCode("mongoose", err.code)}`, "db", "err");
+    return buildRes("失败", err.message, 201);
+  }
+}
 
 async function add(data) {
   const visitorData = data.visitor;
   data = data.message;
 
   try {
-    const visitorResponse = await addVisitor(visitorData);
-    if (visitorResponse.code === 200) {
-      data.visitor = visitorResponse.data._id;
+    let visitor;
 
-      const model = new Message(data);
-      const doc = await model.save();
+    // 查找是否已有相同 IP 地址的访客
+    visitor = await findVisitorByIp(visitorData.ip);
 
-      multiLog([...[["msg", `Message被添加`]], ...Object.entries(data)]);
-      return buildRes("成功", { ...doc.toObject() });
-    } else {
-      return buildRes("失败", "Visitor添加时失败", 201);
+    if (!visitor) {
+      // 如果没有找到，添加新的访客
+      const visitorResponse = await addVisitor(visitorData);
+      if (visitorResponse.code === 200) {
+        visitor = visitorResponse.data;
+      } else {
+        return buildRes("失败", "Visitor添加时失败", 201);
+      }
     }
+
+    // 使用找到或新添加的访客的 _id
+    data.visitor = visitor._id;
+
+    // 创建并保存 Message 模型
+    const model = new Message(data);
+    const doc = await model.save();
+
+    multiLog([...[["msg", `Message被添加`]], ...Object.entries(data)]);
+    return buildRes("成功", { ...doc.toObject() });
   } catch (err) {
     log(`Message添加时${errCode("mongoose", err.code)}`, "db", "err");
     return buildRes("失败", err.message, 201);
   }
 }
+
+// async function add(data) {
+//   const visitorData = data.visitor;
+//   data = data.message;
+//
+//   try {
+//     const visitorResponse = await addVisitor(visitorData);
+//     if (visitorResponse.code === 200) {
+//       data.visitor = visitorResponse.data._id;
+//
+//       const model = new Message(data);
+//       const doc = await model.save();
+//
+//       multiLog([...[["msg", `Message被添加`]], ...Object.entries(data)]);
+//       return buildRes("成功", { ...doc.toObject() });
+//     } else {
+//       return buildRes("失败", "Visitor添加时失败", 201);
+//     }
+//   } catch (err) {
+//     log(`Message添加时${errCode("mongoose", err.code)}`, "db", "err");
+//     return buildRes("失败", err.message, 201);
+//   }
+// }
 
 async function find(data) {
   const { id } = data;

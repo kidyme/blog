@@ -65,6 +65,7 @@ async function findAll(params) {
     return buildRes("错误", err.message, 201);
   }
 }
+
 async function like(id) {
   try {
     const doc = await Post.findById(id);

@@ -17,7 +17,7 @@ export default model(
     ip: {
       type: String,
       unique: false,
-      sparse: true, // 允许多条空
+      sparse: true,
     },
   }),
 );
