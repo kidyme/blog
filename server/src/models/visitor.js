@@ -11,11 +11,13 @@ export default model(
     },
     email: {
       type: String,
-      unique: true,
+      unique: false,
+      sparse: true, // 允许多条空
     },
     ip: {
       type: String,
-      unique: true,
+      unique: false,
+      sparse: true, // 允许多条空
     },
   }),
 );
