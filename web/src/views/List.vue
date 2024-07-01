@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="route.query.category" style="position: fixed; left: 15px; top: 63px" color="" @click="jumpBack"> 返回 </v-btn>
+    <v-btn v-if="route.query.category" style="position: fixed; left: 15px; top: 63px" color="" @click="jumpToHome"> 首页 </v-btn>
     <v-sheet :elevation="1" border class="mb-6 px-12 pt-3" v-for="post in posts">
       <div>
         <span @click="jump(post._id)" class="underline" style="font-size: 25px; font-weight: 500; cursor: pointer">{{ post.title }}</span>
@@ -36,7 +36,7 @@ watch(
   { immediate: true }
 );
 
-const jumpBack = () => {
+const jumpToHome = () => {
   router.push('/');
 };
 

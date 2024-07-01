@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn style="position: fixed; left: 15px; top: 63px" color="" @click="jumpBack"> 返回 </v-btn>
+    <v-btn style="position: fixed; left: 15px; top: 63px" color="" @click="jumpToHome"> 首页 </v-btn>
     <v-sheet :elevation="1" border class="px-12 pt-3" v-if="post">
       <div>
         <span style="font-size: 30px; font-weight: 700; color: #000">{{ post.title }}</span>
@@ -48,7 +48,7 @@ import visitorModel from '@/model/visitor.js';
 import messageModel from '@/model/message.js';
 
 const router = useRouter();
-const jumpBack = () => {
+const jumpToHome = () => {
   router.push('/');
 };
 
