@@ -18,7 +18,7 @@
       </div>
     </v-sheet>
 
-    <v-sheet :elevation="1" border class="mt-8 py-4 px-12" style="margin-bottom: 100px">
+    <v-sheet v-if="post" :elevation="1" border class="mt-8 py-4 px-12" style="margin-bottom: 100px">
       <div v-for="msg in messages" class="mb-4">
         <div>
           <span class="name mr-3">{{ msg.visitor.name }}</span>
