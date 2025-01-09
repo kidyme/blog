@@ -28,7 +28,8 @@ const router = useRouter();
 const route = useRoute();
 
 const jump = (path) => {
-  router.push(path);
+  if (path === '/') router.go(-1);
+  else router.push(path);
 };
 
 watch(

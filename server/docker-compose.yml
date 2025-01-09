@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1030
+    ports:
+      - "27017:27017"
+
+  mongo-express:
+    image: "mongo-express"
+    restart: always
+    ports:
+      - "8088:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1030
+      ME_CONFIG_MONGODB_URL: mongodb://root:1030@mongo:27017/
+      ME_CONFIG_BASICAUTH: false

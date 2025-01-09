@@ -6,7 +6,7 @@
       </v-sheet>
 
       <v-list style="user-select: none">
-        <v-list-item v-for="([tab, path], idx) in links" :key="idx" :title="tab" link @click="goto(path)"></v-list-item>
+        <v-list-item class="menu ml-2" v-for="([tab, path], idx) in links" :key="idx" link @click="goto(path)">{{ tab }}</v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -26,9 +26,9 @@ import avatarImage from '@/assets/avatar.webp';
 const router = useRouter();
 
 const links = [
-  ['Edit', '/edit'],
-  ['Statistics', '/ststcs'],
-  ['About', '/about'],
+  ['内容', '/content'],
+  ['数据', '/ststcs'],
+  ['关于', '/about'],
 ];
 
 const drawer = ref(null);
@@ -37,3 +37,10 @@ let goto = (path) => {
   router.push(path);
 };
 </script>
+
+<style scoped>
+.menu {
+  font-size: 18px;
+  font-weight: 700;
+}
+</style>

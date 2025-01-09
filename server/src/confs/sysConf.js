@@ -4,7 +4,7 @@ const configs = {
   development: {
     port: 3000,
     log: false,
-    db: "mongodb://127.0.0.1:27017/blog",
+    db: "mongodb://root:1030@127.0.0.1:27017/blog?authSource=admin",
   },
   production: {
     port: 3000,

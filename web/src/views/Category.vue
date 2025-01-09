@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-3" style="display: flex; justify-content: space-around">
+  <div class="pa-3" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px">
     <span
       class="pa-2"
       v-for="category in categories"

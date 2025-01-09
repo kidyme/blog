@@ -146,7 +146,7 @@ const baseCRUD = (Model, modelName) => {
       const updatedDoc = await Model.findByIdAndUpdate(
         id,
         { $set: { ...data, updateTime: new Date() } },
-        { new: true },
+        { new: true }
       );
 
       if (updatedDoc) {

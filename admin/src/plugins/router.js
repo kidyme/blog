@@ -1,29 +1,29 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Layout from "@/layout/index.vue";
-import Home from "@/views/Home.vue";
-import Edit from "@/views/Edit.vue";
-import Statistics from "@/views/Statistics.vue";
-import About from "@/views/About.vue";
+import { createRouter, createWebHashHistory } from 'vue-router';
+import Layout from '@/layout/index.vue';
+import Home from '@/views/Home.vue';
+import Content from '@/views/Content.vue';
+import Statistics from '@/views/Statistics.vue';
+import About from '@/views/About.vue';
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     component: Layout,
     children: [
       {
-        path: "",
+        path: '',
         component: Home,
       },
       {
-        path: "/edit",
-        component: Edit,
+        path: '/content',
+        component: Content,
       },
       {
-        path: "/ststcs",
+        path: '/ststcs',
         component: Statistics,
       },
       {
-        path: "/about",
+        path: '/about',
         component: About,
       },
     ],

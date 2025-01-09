@@ -2,32 +2,31 @@ import http from '@/utils/request.js';
 
 export default (url) => {
   return {
-    get: function (params) {
-      return http({
+    get: (params) =>
+      http({
+        url: url + '/one',
+        method: 'get',
+        params,
+      }),
+    getAll: (params = {}) =>
+      http({
         url,
         method: 'get',
         params,
-      });
-    },
-    getAll: function (data) {
-      return http({
-        url,
-        method: 'get',
-      });
-    },
-    add: async (data) =>
+      }),
+    add: (data) =>
       http({
         url,
         method: 'post',
         data,
       }),
-    update: async (data) =>
+    update: (data) =>
       http({
         url,
         method: 'put',
         data,
       }),
-    remove: async (data) =>
+    remove: (data) =>
       http({
         url,
         method: 'delete',

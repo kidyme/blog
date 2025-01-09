@@ -1,4 +1,4 @@
-<template></template>
+<template>Inf</template>
 
 <script setup>
 import { ref } from 'vue';

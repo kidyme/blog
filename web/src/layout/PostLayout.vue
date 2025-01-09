@@ -8,7 +8,7 @@
           </v-col>
           <v-col style="flex: 5" class="pt-8">
             <div class="side-card">
-              <v-sheet min-height="40vh" max-height="80vh" :elevation="1" class="scrollbar mb-8">
+              <v-sheet v-if="false" min-height="40vh" max-height="80vh" :elevation="1" class="scrollbar mb-8">
                 <Information />
               </v-sheet>
               <v-sheet min-height="40vh" max-height="80vh" :elevation="1" class="scrollbar">
