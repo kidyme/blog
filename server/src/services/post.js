@@ -1,7 +1,25 @@
+import fs from "fs";
+import path from "path";
+import multer from "multer";
+import config from "../confs/sysConf.js";
 import { log, multiLog } from "../utils/logger.js";
+import { generateUUID } from "../utils/uuid.js";
 import { buildRes } from "../utils/base.js";
-import fs from "fs/promises";
 import Post from "../models/post.js";
+import { md2html } from "../plugins/md2html.js";
+
+async function add(data) {
+  const model = new Post(data);
+
+  try {
+    const doc = await model.save();
+    multiLog([...[["msg", `Post被添加`]], ...Object.entries(data)]);
+    return buildRes("成功", { ...doc.toObject() });
+  } catch (err) {
+    log(`Post添加时${errCode("mongoose", err.code)}`, "db", "err");
+    return buildRes("失败", err.message, 201);
+  }
+}
 
 async function find(data) {
   const { id } = data;
@@ -13,7 +31,7 @@ async function find(data) {
       const path = doc.path;
 
       try {
-        const content = await fs.readFile(path, "utf8");
+        const content = fs.readFileSync(path, "utf8");
         let post = JSON.parse(JSON.stringify(doc));
         post.content = content;
         return buildRes("suc", post);
@@ -43,10 +61,10 @@ async function findAll(params) {
     ]);
 
     const posts = await Promise.all(
-      docs.map(async (doc) => {
+      docs.map((doc) => {
         const path = doc.path;
         try {
-          const content = await fs.readFile(path, "utf8");
+          let content = fs.readFileSync(path, "utf8");
           let post = JSON.parse(JSON.stringify(doc));
           post.content = content;
           return post;
@@ -84,4 +102,36 @@ async function like(id) {
   }
 }
 
-export { find, findAll, like };
+function storage() {
+  return multer({
+    storage: multer.diskStorage({
+      destination: function (req, file, cb) {
+        const dir = path.join(config.filePath, "md/");
+        fs.mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+      },
+      filename: function (req, file, cb) {
+        const title = generateUUID();
+        const ext = path.extname(file.originalname);
+        const filename = `${title}${ext}`;
+        cb(null, filename);
+      },
+    }),
+  });
+}
+
+async function upload(req) {
+  const file = req.file;
+  multiLog([
+    ["msg", "Post被添加"],
+    ["filename", file.filename],
+  ]);
+
+  file.htmlPath =
+    config.filePath + "html/" + file.filename.replace(/\.md$/, ".html");
+  md2html(file.path, file.htmlPath);
+
+  return buildRes("文件上传成功", file);
+}
+
+export { add, find, findAll, like, storage, upload };

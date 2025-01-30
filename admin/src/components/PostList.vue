@@ -1,18 +1,11 @@
 <template>
   <div>
+    <v-btn color="primary" @click="addPost" class="mb-6"> 添加帖子 </v-btn>
     <v-sheet :elevation="1" border class="mb-6 px-12 pt-3" v-for="post in posts">
       <div style="display: flex; align-items: end; justify-content: space-between">
-        <v-hover>
-          <template v-slot:default="{ isHovering, props }">
-            <div v-bind="props" style="display: flex; align-items: center">
-              <span @click="jump(post.title, post._id)" class="underline" style="font-size: 25px; font-weight: 500; cursor: pointer">
-                {{ post.title }}
-              </span>
-              <v-btn v-if="isHovering" small @click.stop="handleButtonClick(post._id)" style="margin-left: 8px"> 编辑 </v-btn>
-            </div>
-          </template>
-        </v-hover>
-
+        <span @click="jump(post.title, post._id)" class="underline" style="font-size: 25px; font-weight: 500; cursor: pointer">
+          {{ post.title }}
+        </span>
         <span style="color: #212121; font-size: 16px; font-weight: 400" class="ml-2">{{ formatTime(post.updateTime, 'yyyy年MM月dd日') }}</span>
       </div>
       <v-divider color="#000" class="my-3"></v-divider>
@@ -40,9 +33,12 @@ const fetch = async () => {
   postModel.actions.getAll({ category: props.categoryId });
 };
 
-const emit = defineEmits(['addPostTab']);
+const emit = defineEmits(['addPostTab', 'addPost']);
 const jump = (title, id) => {
   emit('addPostTab', { title, id });
+};
+const addPost = () => {
+  emit('addPost');
 };
 
 fetch();

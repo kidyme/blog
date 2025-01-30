@@ -10,7 +10,7 @@
             }"
             >{{ item.title }}</span
           >
-          <span v-if="item.type === 'Post' || item.type === 'PostListWithCategory'" class="close-icon" @click.stop="close(idx)"> × </span>
+          <span v-if="item.type === 'Post' || item.type === 'PostListWithCategory' || item.type === 'AddPost'" class="close-icon" @click.stop="close(idx)"> × </span>
         </v-tab>
       </v-tabs>
       <v-spacer></v-spacer>
@@ -21,7 +21,9 @@
         :key="menu[choice].key"
         :is="currentComponent"
         @addPostTab="addPostTab"
+        @addPost="addPost"
         @jumpToPostWithCategoryId="jumpToPostWithCategoryId"
+        @closeTab="close"
         :postId="menu[choice].postId"
         :categoryId="menu[choice].categoryId"
       />
@@ -35,6 +37,7 @@ import generateUUID from '@/utils/uuid.js';
 import PostList from '@/components/PostList.vue';
 import Post from '@/components/Post.vue';
 import Category from '@/components/Category.vue';
+import AddPost from '@/components/AddPost.vue';
 
 const menu = ref([
   {
@@ -55,6 +58,7 @@ const typeToComponent = {
   'Category': Category,
   'Post': Post,
   'PostListWithCategory': PostList,
+  'AddPost': AddPost,
 };
 
 const currentTab = ref(menu.value[0]);
@@ -80,6 +84,17 @@ const addPostTab = ({ title, id }) => {
   choice.value = menu.value.findIndex((item) => item.title === title);
 };
 
+const addPost = () => {
+  const title = '添加帖子';
+  const type = 'AddPost';
+  const isTitleExist = menu.value.some((item) => item.title === title);
+
+  if (!isTitleExist) {
+    menu.value.push({ title, type, key: generateUUID() });
+  }
+  choice.value = menu.value.findIndex((item) => item.title === title);
+};
+
 const jumpToPostWithCategoryId = ({ id, title }) => {
   title = title + "'s 帖子";
   const isTitleExist = menu.value.some((item) => item.title === title);
@@ -92,17 +107,22 @@ const jumpToPostWithCategoryId = ({ id, title }) => {
 };
 
 const close = (idx) => {
-  const isClosingCurrentTab = choice.value === idx;
+  if (!idx) {
+    menu.value.splice(choice.value, 1);
+    choice.value = 0;
+  } else {
+    const isClosingCurrentTab = choice.value === idx;
 
-  menu.value.splice(idx, 1);
+    menu.value.splice(idx, 1);
 
-  if (isClosingCurrentTab) {
-    if (idx < menu.value.length) {
-      choice.value = idx;
-    } else if (idx > 0) {
-      choice.value = idx - 1;
-    } else {
-      choice.value = -1;
+    if (isClosingCurrentTab) {
+      if (idx < menu.value.length) {
+        choice.value = idx;
+      } else if (idx > 0) {
+        choice.value = idx - 1;
+      } else {
+        choice.value = -1;
+      }
     }
   }
 };

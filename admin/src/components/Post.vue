@@ -2,7 +2,15 @@
   <div>
     <div v-if="post" class="px-12 pt-3">
       <div style="display: flex; align-items: end; justify-content: space-between">
-        <span style="font-size: 25px; font-weight: 500; cursor: pointer">{{ post.title }}</span>
+        <v-hover>
+          <template v-slot:default="{ isHovering, props }">
+            <div v-bind="props" style="display: flex; align-items: center">
+              <span class="underline" style="font-size: 25px; font-weight: 500; cursor: pointer">{{ post.title }}</span>
+              <v-btn v-if="isHovering" small @click.stop="handleButtonClick(post._id)" style="margin-left: 8px"> 编辑 </v-btn>
+            </div>
+          </template>
+        </v-hover>
+
         <span style="color: #212121; font-size: 16px; font-weight: 400" class="ml-2">{{ formatTime(post.updateTime, 'yyyy年MM月dd日') }}</span>
       </div>
       <v-divider color="#000" class="my-3"></v-divider>
